@@ -1,0 +1,80 @@
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.5"
+    }
+}
+
+plugins {
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+project.ext {
+    dropwizardVersion = '0.9.2'
+    dropwizardJava8Version = '0.9.0-1'
+    slf4jVersion = '1.7.14'
+    daggerVersion = '2.0'
+    testNGVersion = '6.9.10'
+    twilioVersion = '3.4.5'
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply plugin: "net.ltgt.apt"
+
+dependencies {
+    compile(
+            "io.dropwizard:dropwizard-core:$dropwizardVersion",
+            "io.dropwizard:dropwizard-testing:$dropwizardVersion",
+            "io.dropwizard.modules:dropwizard-java8:$dropwizardJava8Version",
+            "org.slf4j:slf4j-api:$slf4jVersion",
+            "com.google.dagger:dagger:$daggerVersion",
+            "com.twilio.sdk:twilio-java-sdk:$twilioVersion"
+    )
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+    testCompile "org.testng:testng:$testNGVersion"
+}
+
+compileJava {
+    options.compilerArgs += [
+            "-s", project.projectDir.absolutePath + '/build/generated/source/apt/main'
+    ]
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.4'
+}
+
+apply plugin: 'application'
+
+mainClassName = 'com.netegreek.chattr.ChattrApplication'
+
+// Configure the run task to start the Dropwizard service
+run {
+    args 'server', 'config.yml'
+}
+
+test {
+    // show standard out and standard error of the test JVM(s) on the console
+    testLogging {
+        showStandardStreams = true
+        displayGranularity = 2
+        exceptionFormat = 'full'
+        events 'started', 'passed'
+    }
+}

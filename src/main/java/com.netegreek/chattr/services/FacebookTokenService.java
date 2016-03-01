@@ -4,8 +4,12 @@ import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.MessageBodyReader;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.amazonaws.util.json.Jackson;
+import com.netegreek.chattr.responses.FacebookTokenResponse;
 
 /**
  * Created by Derek on 2/29/16.
@@ -36,7 +40,9 @@ public class FacebookTokenService {
 
 
 		if (response.hasEntity()) {
-			return (String) response.getEntity();
+			FacebookTokenResponse tokenResponse = response.readEntity(FacebookTokenResponse.class);
+			return tokenResponse.getLongAccessToken();
+
 		} else {
 			throw new WebApplicationException("Facebook Rejected giving new token");
 		}

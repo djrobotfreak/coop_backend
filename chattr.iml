@@ -9,9 +9,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/main" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/build/generated/source/apt/test" isTestSource="true" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/build/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/dependency-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/distributions" />
@@ -114,19 +113,24 @@
     <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-io:9.2.13.v20150730" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-xml:9.2.13.v20150730" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.eclipse.jetty:jetty-security:9.2.13.v20150730" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.google.dagger:dagger-compiler:2.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: com.google.dagger:dagger-producers:2.0-beta" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.testng:testng:6.9.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.beust:jcommander:1.48" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: org.beanshell:bsh:2.0b4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.twilio.sdk:twilio-java-sdk:3.4.5" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.apache.httpcomponents:httpclient:4.1.2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.googlecode.json-simple:json-simple:1.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.codehaus.jackson:jackson-mapper-asl:1.9.3" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: org.apache.httpcomponents:httpcore:4.1.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: commons-logging:commons-logging:1.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: commons-codec:commons-codec:1.4" level="project" />
     <orderEntry type="library" exported="" name="Gradle: org.codehaus.jackson:jackson-core-asl:1.9.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: io.dropwizard:dropwizard-auth:0.9.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: io.dropwizard:dropwizard-client:0.9.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.amazonaws:aws-java-sdk-s3:1.10.47" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.apache.httpcomponents:httpclient:4.5.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: io.dropwizard.metrics:metrics-httpclient:3.1.2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.glassfish.jersey.connectors:jersey-apache-connector:2.22.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.amazonaws:aws-java-sdk-kms:1.10.47" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.amazonaws:aws-java-sdk-core:1.10.47" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: org.apache.httpcomponents:httpcore:4.4.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: commons-codec:commons-codec:1.9" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: junit:junit:4.11" level="project" />
   </component>
 </module>

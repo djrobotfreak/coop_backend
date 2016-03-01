@@ -6,11 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import javax.inject.Inject;
 
 /**
  * Created by Derek on 2/29/16.
  */
 public class UserRepository {
+
+	@Inject
+	public UserRepository (){
+
+	}
 
     private Map<UUID, User> userRepository = new HashMap<UUID, User>();
 

@@ -6,15 +6,14 @@ import io.dropwizard.client.JerseyClientConfiguration;
 import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ChattrConfiguration extends Configuration {
+public class CoopConfiguration extends Configuration {
     @NotEmpty
     private String template;
 
     @NotEmpty
     private String defaultName = "Stranger";
 
-	@NotEmpty
-	private JerseyClientConfiguration jerseyClientConfiguration;
+	private JerseyClientConfiguration jerseyClientConfiguration = new JerseyClientConfiguration();
 
 	@JsonProperty
 	public String getTemplate() {

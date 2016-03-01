@@ -1,10 +1,15 @@
 package com.netegreek.chattr.resources;
 
+import com.codahale.metrics.annotation.Timed;
 import com.netegreek.chattr.repositories.UserRepository;
+import com.netegreek.chattr.services.FacebookTokenService;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.MediaType;
@@ -14,17 +19,18 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthenticationResource {
 
-    private UserRepository userRepository;
+	private FacebookTokenService facebookTokenService;
 
-    public AuthenticationResource(UserRepository userRepository, Client client) {
-        this.userRepository = userRepository;
+	@Inject
+    public AuthenticationResource(FacebookTokenService facebookTokenService) {
+		this.facebookTokenService = facebookTokenService;
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    private String login(String shortFacebookToken) {
-
-        return "";
+    @GET
+	@Timed
+    @Path("/{token}")
+    public String login(@PathParam("token") String shortFacebookToken) {
+		return facebookTokenService.getApplicationToken(shortFacebookToken);
     }
 
 //    @POST

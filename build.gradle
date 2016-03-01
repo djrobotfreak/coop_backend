@@ -7,6 +7,7 @@ buildscript {
     }
     dependencies {
         classpath "io.spring.gradle:dependency-management-plugin:0.5.4.RELEASE"
+        classpath "net.ltgt.gradle:gradle-apt-plugin:0.5"
     }
 }
 
@@ -14,7 +15,12 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
 
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: "io.spring.dependency-management"
+apply plugin: "net.ltgt.apt"
+apply plugin: 'application'
 
 
 dependencyManagement {
@@ -25,9 +31,7 @@ dependencyManagement {
 
 
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'com.github.johnrengelman.shadow'
+
 
 
 sourceCompatibility = '1.8'
@@ -37,7 +41,7 @@ project.ext {
     dropwizardVersion = '0.9.2'
     dropwizardJava8Version = '0.9.0-1'
     slf4jVersion = '1.7.14'
-    daggerVersion = '2.0'
+    daggerVersion = '2.0.2'
     testNGVersion = '6.9.10'
     twilioVersion = '3.4.5'
 }
@@ -53,6 +57,7 @@ dependencies {
             "io.dropwizard:dropwizard-testing:$dropwizardVersion",
             "io.dropwizard:dropwizard-client:$dropwizardVersion",
             "io.dropwizard.modules:dropwizard-java8:$dropwizardJava8Version",
+            "com.google.dagger:dagger:$daggerVersion",
             "org.slf4j:slf4j-api:$slf4jVersion",
             "com.google.dagger:dagger:$daggerVersion",
             "com.twilio.sdk:twilio-java-sdk:$twilioVersion",
@@ -60,6 +65,8 @@ dependencies {
     )
     testCompile "org.testng:testng:$testNGVersion"
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    apt "com.google.dagger:dagger-compiler:$daggerVersion"
+
 }
 
 compileJava {
@@ -72,9 +79,7 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.11'
 }
 
-apply plugin: 'application'
-
-mainClassName = 'com.netegreek.chattr.ChattrApplication'
+mainClassName = 'com.netegreek.chattr.CoopApplication'
 
 // Configure the run task to start the Dropwizard service
 run {

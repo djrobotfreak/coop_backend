@@ -14,8 +14,7 @@ import javax.inject.Inject;
 public class UserRepository {
 
 	@Inject
-	public UserRepository (){
-
+	public UserRepository () {
 	}
 
     private Map<UUID, User> userRepository = new HashMap<UUID, User>();
@@ -28,6 +27,16 @@ public class UserRepository {
             return Optional.empty();
         }
     }
+
+	public Optional<User> getByFBID(Long id) {
+
+		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
+			if (user.getValue().getFBId().equals(id)){
+				return Optional.of(user.getValue());
+			}
+		}
+		return Optional.empty();
+	}
 
     public void save(User user) {
         this.userRepository.put(user.getId(), user);

@@ -10,7 +10,7 @@ public class User {
 
     private UUID id;
 
-    private String FBToken;
+    private Long FBId;
 
     private String email;
 
@@ -26,15 +26,15 @@ public class User {
         this.id = id;
     }
 
-    public String getFBToken() {
-        return FBToken;
-    }
+	public Long getFBId() {
+		return FBId;
+	}
 
-    public void setFBToken(String FBToken) {
-        this.FBToken = FBToken;
-    }
+	public void setFBId(Long FBId) {
+		this.FBId = FBId;
+	}
 
-    public String getEmail() {
+	public String getEmail() {
         return email;
     }
 

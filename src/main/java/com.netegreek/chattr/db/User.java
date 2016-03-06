@@ -10,13 +10,15 @@ public class User {
 
     private UUID id;
 
-    private Long FBId;
+    private Long FacebookId;
 
     private String email;
 
     private String name;
 
     private Collection<String> tokens;
+
+    private ProfilePhoto profilePhoto;
 
     public UUID getId() {
         return id;
@@ -26,12 +28,12 @@ public class User {
         this.id = id;
     }
 
-    public Long getFBId() {
-        return FBId;
+    public Long getFacebookId() {
+        return FacebookId;
     }
 
-    public void setFBId(Long FBId) {
-        this.FBId = FBId;
+    public void setFacebookId(Long facebookId) {
+        this.FacebookId = facebookId;
     }
 
     public String getEmail() {

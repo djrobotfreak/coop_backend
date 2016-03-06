@@ -6,7 +6,6 @@ import com.netegreek.chattr.di.CoopComponent;
 import com.netegreek.chattr.di.CoopModule;
 import com.netegreek.chattr.di.DaggerCoopComponent;
 import com.netegreek.chattr.health.MarcoHealthCheck;
-import com.netegreek.chattr.resources.HelloWorldResource;
 import com.netegreek.chattr.resources.TextMessageResource;
 import io.dropwizard.Application;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -28,16 +27,16 @@ public class CoopApplication extends Application<CoopConfiguration> {
                         new EnvironmentVariableSubstitutor(false)
                 )
         );
-
     }
 
     @Override
     public void run(CoopConfiguration configuration, Environment environment) {
 
         environment.healthChecks().register("ping", new MarcoHealthCheck());
-        environment.jersey().register(new HelloWorldResource());
         environment.jersey().register(new TextMessageResource());
-        CoopComponent component = DaggerCoopComponent.builder().coopModule(new CoopModule(configuration, environment)).build();
+        CoopComponent component = DaggerCoopComponent.builder()
+                .coopModule(new CoopModule(configuration, environment))
+                .build();
 
         environment.getObjectMapper()
                 .setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);

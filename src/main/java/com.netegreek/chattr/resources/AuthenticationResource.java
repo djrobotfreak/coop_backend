@@ -2,7 +2,7 @@ package com.netegreek.chattr.resources;
 
 import com.codahale.metrics.annotation.Timed;
 import com.netegreek.chattr.db.User;
-import com.netegreek.chattr.twilio.FacebookService;
+import com.netegreek.chattr.services.FacebookService;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -25,8 +25,13 @@ public class AuthenticationResource {
 
     @GET
     @Timed
-    @Path("/{token}")
-    public User login(@PathParam("token") String shortFacebookToken) {
+    @Path("/facebook/{token}")
+    public User loginWithFacebook(@PathParam("token") String shortFacebookToken) {
         return facebookService.registerOrLogin(shortFacebookToken);
+    }
+
+    //TODO: set this up with Google.
+    public User loginWithGoogle(@PathParam("token") String shortGoogleToken) {
+        return null;
     }
 }

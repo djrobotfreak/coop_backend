@@ -18,14 +18,14 @@ public class FacebookUserMapper implements ResponseMapper<User, FacebookUserResp
     public User createValueTFromResponse(FacebookUserResponse facebookUserResponse) {
         User user = new User();
         user.setEmail(facebookUserResponse.getEmail());
-        user.setFBId(facebookUserResponse.getId());
+        user.setFacebookId(facebookUserResponse.getId());
         user.setName(facebookUserResponse.getName());
         return user;
     }
 
     public User updateValueTFromResponse(User user, FacebookUserResponse facebookUserResponse) {
         user.setEmail(facebookUserResponse.getEmail());
-        user.setFBId(facebookUserResponse.getId());
+        user.setFacebookId(facebookUserResponse.getId());
         user.setName(facebookUserResponse.getName());
         return user;
     }

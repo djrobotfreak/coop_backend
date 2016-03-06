@@ -2,6 +2,7 @@ package com.netegreek.chattr.clients;
 
 import com.netegreek.chattr.responses.FacebookTokenResponse;
 import com.netegreek.chattr.responses.FacebookUserResponse;
+import org.glassfish.jersey.client.ClientResponse;
 
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
@@ -33,12 +34,16 @@ public class FacebookClient {
                 .request()
                 .get();
 
+        if (response.getStatus() != 200) {
+            handleFacebookErrors(response);
+        }
+
         if (response.hasEntity()) {
             FacebookTokenResponse tokenResponse = response.readEntity(FacebookTokenResponse.class);
             return tokenResponse.getLongAccessToken();
 
         } else {
-            throw new WebApplicationException("Facebook rejected giving new token.");
+            throw new WebApplicationException("No entity received from Facebook.");
         }
     }
 
@@ -48,13 +53,21 @@ public class FacebookClient {
                 .queryParam("fields", "id,name,email")
                 .request()
                 .get();
+        if (response.getStatus() != 200) {
+            handleFacebookErrors(response);
+        }
 
         if (response.hasEntity()) {
-            FacebookUserResponse userResponse = response.readEntity(FacebookUserResponse.class);
-            return userResponse;
+            return response.readEntity(FacebookUserResponse.class);
 
         } else {
             throw new WebApplicationException("Unknown Exception getting new User.");
         }
+    }
+
+    //TODO: This is pretty hacky. Really we need to have different exceptions that handle all this.
+    private void handleFacebookErrors(Response response) {
+        String s = response.readEntity(String.class);
+        throw new WebApplicationException("Error recieved from facebook: " + s);
     }
 }

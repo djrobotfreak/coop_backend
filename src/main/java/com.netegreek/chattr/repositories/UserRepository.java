@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Created by Derek on 2/29/16.
+ * TODO: This needs to actually hook-up with the database.
  */
 public class UserRepository {
 
@@ -30,7 +30,7 @@ public class UserRepository {
     public Optional<User> getByFBID(Long id) {
 
         for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
-            if (user.getValue().getFBId().equals(id)) {
+            if (user.getValue().getFacebookId().equals(id)) {
                 return Optional.of(user.getValue());
             }
         }

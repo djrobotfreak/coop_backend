@@ -1,4 +1,4 @@
-package com.netegreek.chattr.twilio;
+package com.netegreek.chattr.services;
 
 import com.netegreek.chattr.clients.FacebookClient;
 import com.netegreek.chattr.db.User;
@@ -32,8 +32,8 @@ public class FacebookService {
         String longAccessToken = facebookClient.getLongAccessToken(shortAccessToken);
         FacebookUserResponse userResponse = facebookClient.getUser(longAccessToken);
         Optional<User> userOptional = userRepository.getByFBID(userResponse.getId());
-        User user;
 
+        User user;
         if (userOptional.isPresent()) {
             user = userMapper.updateValueTFromResponse(userOptional.get(), userResponse);
         } else {

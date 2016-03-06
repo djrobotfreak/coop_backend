@@ -1,6 +1,8 @@
 package com.netegreek.chattr.responses;
 
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 public class FacebookUserResponse {
 
@@ -13,7 +15,15 @@ public class FacebookUserResponse {
     @NotNull
     private Long id;
 
-    public String getEmail() {
+	@JsonUnwrapped()
+	@JsonProperty("picture")
+	private FacebookPictureResponse pictureResponse;
+
+	public FacebookPictureResponse getPictureResponse() {
+		return pictureResponse;
+	}
+
+	public String getEmail() {
         return email;
     }
 

@@ -1,5 +1,6 @@
 package com.netegreek.chattr.db;
 
+import java.net.URI;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -18,7 +19,7 @@ public class User {
 
     private Collection<String> tokens;
 
-    private ProfilePhoto profilePhoto;
+    private String photoUrl;
 
     public UUID getId() {
         return id;
@@ -58,5 +59,13 @@ public class User {
 
     public void setTokens(Collection<String> tokens) {
         this.tokens = tokens;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

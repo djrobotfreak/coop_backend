@@ -5,5 +5,5 @@ package com.netegreek.chattr.db;
  */
 public class ProfileImage {
 
-    
+
 }

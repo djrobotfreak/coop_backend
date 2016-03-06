@@ -2,6 +2,7 @@ package com.netegreek.chattr;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.netegreek.chattr.di.CoopComponent;
 import com.netegreek.chattr.di.CoopModule;
 import com.netegreek.chattr.di.DaggerCoopComponent;
@@ -31,18 +32,20 @@ public class CoopApplication extends Application<CoopConfiguration> {
 
     @Override
     public void run(CoopConfiguration configuration, Environment environment) {
-
-        environment.healthChecks().register("ping", new MarcoHealthCheck());
-        environment.jersey().register(new TextMessageResource());
         CoopComponent component = DaggerCoopComponent.builder()
                 .coopModule(new CoopModule(configuration, environment))
                 .build();
+
+        environment.jersey().register(component.authenticationResource());
+        environment.jersey().register(new TextMessageResource());
+
+        environment.healthChecks().register("ping", new MarcoHealthCheck());
 
         environment.getObjectMapper()
                 .setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 
         environment.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        environment.jersey().register(component.authenticationResource());
+        environment.getObjectMapper().registerModule(new Jdk8Module());
     }
 }

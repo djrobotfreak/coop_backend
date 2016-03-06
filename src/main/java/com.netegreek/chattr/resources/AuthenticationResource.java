@@ -31,6 +31,9 @@ public class AuthenticationResource {
     }
 
     //TODO: set this up with Google.
+    @GET
+    @Timed
+    @Path("/google/{token}")
     public User loginWithGoogle(@PathParam("token") String shortGoogleToken) {
         return null;
     }

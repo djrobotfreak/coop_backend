@@ -1,13 +1,15 @@
 package com.netegreek.chattr.responses;
 
 import javax.validation.constraints.NotNull;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
+import com.fasterxml.jackson.annotation.*;
+
+import java.util.Optional;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FacebookUserResponse {
 
-
-    private String email;
+    private Optional<String> email;
 
     @NotNull
     private String name;
@@ -15,23 +17,33 @@ public class FacebookUserResponse {
     @NotNull
     private Long id;
 
-	@JsonUnwrapped()
-	@JsonProperty("picture")
-	private FacebookPictureResponse pictureResponse;
+    private Optional<FacebookDataResponse<FacebookPictureResponse>> picture;
 
-	public FacebookPictureResponse getPictureResponse() {
-		return pictureResponse;
-	}
+    @JsonCreator
+    public FacebookUserResponse(
+            @JsonProperty("email") Optional<String> email,
+            @JsonProperty("name") String name,
+            @JsonProperty("id") Long id,
+            @JsonProperty("picture") Optional<FacebookDataResponse<FacebookPictureResponse>> picture) {
+        this.email = email;
+        this.name = name;
+        this.id = id;
+        this.picture = picture;
+    }
 
-	public String getEmail() {
+    public Optional<String> getEmail() {
         return email;
     }
 
-    public String getName() {
-        return name;
+    public Optional<String> getName() {
+        return Optional.of(name);
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Optional<FacebookDataResponse<FacebookPictureResponse>> getPicture() {
+        return picture;
     }
 }

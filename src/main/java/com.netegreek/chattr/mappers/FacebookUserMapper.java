@@ -2,6 +2,8 @@ package com.netegreek.chattr.mappers;
 
 import com.netegreek.chattr.db.User;
 import com.netegreek.chattr.responses.FacebookUserResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
@@ -17,16 +19,26 @@ public class FacebookUserMapper implements ResponseMapper<User, FacebookUserResp
     @Override
     public User createValueTFromResponse(FacebookUserResponse facebookUserResponse) {
         User user = new User();
-        user.setEmail(facebookUserResponse.getEmail());
+        if (facebookUserResponse.getEmail().isPresent()) {
+            user.setEmail(facebookUserResponse.getEmail().get());
+        }
+        if (facebookUserResponse.getPicture().isPresent()) {
+            user.setPhotoUrl(facebookUserResponse.getPicture().get().getData().getUrl());
+        }
         user.setFacebookId(facebookUserResponse.getId());
-        user.setName(facebookUserResponse.getName());
+        user.setName(facebookUserResponse.getName().get());
         return user;
     }
 
     public User updateValueTFromResponse(User user, FacebookUserResponse facebookUserResponse) {
-        user.setEmail(facebookUserResponse.getEmail());
+        if (facebookUserResponse.getEmail().isPresent()) {
+            user.setEmail(facebookUserResponse.getEmail().get());
+        }
+        if (facebookUserResponse.getPicture().isPresent()) {
+            user.setPhotoUrl(facebookUserResponse.getPicture().get().getData().getUrl());
+        }
         user.setFacebookId(facebookUserResponse.getId());
-        user.setName(facebookUserResponse.getName());
+        user.setName(facebookUserResponse.getName().get());
         return user;
     }
 }

@@ -1,22 +1,18 @@
 package com.netegreek.chattr;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.netegreek.chattr.di.CoopComponent;
 import com.netegreek.chattr.di.CoopModule;
 import com.netegreek.chattr.di.DaggerCoopComponent;
 import com.netegreek.chattr.health.MarcoHealthCheck;
-import com.netegreek.chattr.repositories.UserRepository;
-import com.netegreek.chattr.resources.AuthenticationResource;
 import com.netegreek.chattr.resources.HelloWorldResource;
 import com.netegreek.chattr.resources.TextMessageResource;
 import io.dropwizard.Application;
-import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-
-import javax.ws.rs.client.Client;
 
 public class CoopApplication extends Application<CoopConfiguration> {
     public static void main(String[] args) throws Exception {
@@ -40,11 +36,13 @@ public class CoopApplication extends Application<CoopConfiguration> {
 
         environment.healthChecks().register("ping", new MarcoHealthCheck());
         environment.jersey().register(new HelloWorldResource());
-		environment.jersey().register(new TextMessageResource());
-		CoopComponent component = DaggerCoopComponent.builder().coopModule(new CoopModule(configuration, environment)).build();
+        environment.jersey().register(new TextMessageResource());
+        CoopComponent component = DaggerCoopComponent.builder().coopModule(new CoopModule(configuration, environment)).build();
 
-		environment.getObjectMapper()
-				.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+        environment.getObjectMapper()
+                .setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+
+        environment.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         environment.jersey().register(component.authenticationResource());
     }

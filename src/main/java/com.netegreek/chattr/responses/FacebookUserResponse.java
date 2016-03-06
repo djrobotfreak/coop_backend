@@ -4,24 +4,24 @@ import javax.validation.constraints.NotNull;
 
 public class FacebookUserResponse {
 
-	@NotNull
-	private String email;
 
-	@NotNull
-	private String name;
+    private String email;
 
-	@NotNull
-	private Long id;
+    @NotNull
+    private String name;
 
-	public String getEmail() {
-		return email;
-	}
+    @NotNull
+    private Long id;
 
-	public String getName() {
-		return name;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

@@ -1,7 +1,6 @@
 package com.netegreek.chattr.resources;
 
 import com.codahale.metrics.annotation.Timed;
-import com.netegreek.chattr.clients.FacebookClient;
 import com.netegreek.chattr.db.User;
 import com.netegreek.chattr.twilio.FacebookService;
 
@@ -17,18 +16,17 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthenticationResource {
 
-	private FacebookService facebookService;
+    private FacebookService facebookService;
 
-	@Inject
+    @Inject
     public AuthenticationResource(FacebookService facebookService) {
-		this.facebookService = facebookService;
+        this.facebookService = facebookService;
     }
 
     @GET
-	@Timed
+    @Timed
     @Path("/{token}")
     public User login(@PathParam("token") String shortFacebookToken) {
-		return facebookService.registerOrLogin(shortFacebookToken);
+        return facebookService.registerOrLogin(shortFacebookToken);
     }
-
 }

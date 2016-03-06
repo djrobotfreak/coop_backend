@@ -1,10 +1,11 @@
 package com.netegreek.chattr.di;
 
+import com.netegreek.chattr.clients.FacebookClient;
+import com.netegreek.chattr.resources.AuthenticationResource;
+import dagger.Component;
+
 import javax.inject.Singleton;
 import javax.ws.rs.client.Client;
-import com.netegreek.chattr.resources.AuthenticationResource;
-import com.netegreek.chattr.clients.FacebookClient;
-import dagger.Component;
 
 /**
  * Created by dwene on 3/1/16.
@@ -14,9 +15,9 @@ import dagger.Component;
 @Component(modules = CoopModule.class)
 public interface CoopComponent {
 
-	Client client();
+    Client client();
 
-	FacebookClient facebookTokenService();
+    FacebookClient facebookTokenService();
 
-	AuthenticationResource authenticationResource();
+    AuthenticationResource authenticationResource();
 }

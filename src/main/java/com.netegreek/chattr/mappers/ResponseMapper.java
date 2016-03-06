@@ -5,6 +5,6 @@ package com.netegreek.chattr.mappers;
  */
 public interface ResponseMapper<ValueT, ResponseT> {
 
-	public ValueT createValueTFromResponse(ResponseT responseT);
+    public ValueT createValueTFromResponse(ResponseT responseT);
 
 }

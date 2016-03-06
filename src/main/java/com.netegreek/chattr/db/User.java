@@ -26,15 +26,15 @@ public class User {
         this.id = id;
     }
 
-	public Long getFBId() {
-		return FBId;
-	}
+    public Long getFBId() {
+        return FBId;
+    }
 
-	public void setFBId(Long FBId) {
-		this.FBId = FBId;
-	}
+    public void setFBId(Long FBId) {
+        this.FBId = FBId;
+    }
 
-	public String getEmail() {
+    public String getEmail() {
         return email;
     }
 

@@ -28,20 +28,8 @@ public class FacebookService {
         this.userRepository = repository;
     }
 
-    public User registerOrLogin(String shortAccessToken) {
-        String longAccessToken = facebookClient.getLongAccessToken(shortAccessToken);
-        FacebookUserResponse userResponse = facebookClient.getUser(longAccessToken);
-        Optional<User> userOptional = userRepository.getByFBID(userResponse.getId());
-
-        User user;
-        if (userOptional.isPresent()) {
-            user = userMapper.updateValueTFromResponse(userOptional.get(), userResponse);
-        } else {
-            user = userMapper.createValueTFromResponse(userResponse);
-            user.setId(UUID.randomUUID());
-        }
-        userRepository.save(user);
-
-        return user;
-    }
+	public boolean checkCredentials(Long id, String accessToken) {
+		FacebookUserResponse userResponse = facebookClient.getUser(accessToken);
+		return id.equals(userResponse.getId());
+	}
 }

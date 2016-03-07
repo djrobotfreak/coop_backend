@@ -61,7 +61,8 @@ dependencies {
             "org.slf4j:slf4j-api:$slf4jVersion",
             "com.google.dagger:dagger:$daggerVersion",
             "com.twilio.sdk:twilio-java-sdk:$twilioVersion",
-            'com.amazonaws:aws-java-sdk-s3'
+            'com.amazonaws:aws-java-sdk-s3',
+            "com.lambdaworks:scrypt:1.4.0"
     )
     testCompile "org.testng:testng:$testNGVersion"
     testCompile group: 'junit', name: 'junit', version: '4.11'

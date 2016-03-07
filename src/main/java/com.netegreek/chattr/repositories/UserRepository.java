@@ -27,15 +27,45 @@ public class UserRepository {
         }
     }
 
-    public Optional<User> getByFBID(Long id) {
+	public Optional<User> getByUsername(String username) {
+		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
+			if (user.getValue().getUsername().equals(username)) {
+				return Optional.of(user.getValue());
+			}
+		}
+		return Optional.empty();
+	}
 
-        for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
-            if (user.getValue().getFacebookId().equals(id)) {
-                return Optional.of(user.getValue());
-            }
-        }
-        return Optional.empty();
+	public Optional<User> getByPhone(String phone) {
+		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
+			if (user.getValue().getPhone().equals(phone)) {
+				return Optional.of(user.getValue());
+			}
+		}
+		return Optional.empty();
+	}
+
+    public Optional<User> getByFacebookId(Long id) {
+		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
+			if (user.getValue().getUserCredentials().getFacebookId().isPresent()) {
+				if (user.getValue().getUserCredentials().getFacebookId().get().equals(id)) {
+					return Optional.of(user.getValue());
+				}
+			}
+		}
+		return Optional.empty();
     }
+
+	public Optional<User> getByGoogleId(Long id) {
+		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
+			if (user.getValue().getUserCredentials().getGoogleId().isPresent()) {
+				if (user.getValue().getUserCredentials().getGoogleId().get().equals(id)) {
+					return Optional.of(user.getValue());
+				}
+			}
+		}
+		return Optional.empty();
+	}
 
     public void save(User user) {
         this.userRepository.put(user.getId(), user);

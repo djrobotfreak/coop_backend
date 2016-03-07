@@ -1,8 +1,9 @@
 package com.netegreek.chattr.db;
 
-import java.net.URI;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * Created by Derek on 2/29/16.
@@ -11,61 +12,82 @@ public class User {
 
     private UUID id;
 
-    private Long FacebookId;
-
     private String email;
 
     private String name;
 
-    private Collection<String> tokens;
+	private String username;
+
+    private String token;
 
     private String photoUrl;
 
-    public UUID getId() {
-        return id;
-    }
+	private String phone;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+	@JsonIgnore
+	private UserCredentials userCredentials;
 
-    public Long getFacebookId() {
-        return FacebookId;
-    }
+	public UUID getId() {
+		return id;
+	}
 
-    public void setFacebookId(Long facebookId) {
-        this.FacebookId = facebookId;
-    }
+	public void setId(UUID id) {
+		this.id = id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Collection<String> getTokens() {
-        return tokens;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setTokens(Collection<String> tokens) {
-        this.tokens = tokens;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
+	public String getToken() {
+		return token;
+	}
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
-    }
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
+
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public UserCredentials getUserCredentials() {
+		return userCredentials;
+	}
+
+	public void setUserCredentials(UserCredentials userCredentials) {
+		this.userCredentials = userCredentials;
+	}
 }

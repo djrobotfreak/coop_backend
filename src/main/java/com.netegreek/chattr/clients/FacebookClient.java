@@ -50,7 +50,7 @@ public class FacebookClient {
     public FacebookUserResponse getUser(String accessToken) {
         Response response = client.target(GRAPH_API_HOST + "me")
                 .queryParam("access_token", accessToken)
-                .queryParam("fields", "id,name,email,picture.type(large)")
+                .queryParam("fields", "id,name")
                 .request()
                 .get();
         if (response.getStatus() != 200) {

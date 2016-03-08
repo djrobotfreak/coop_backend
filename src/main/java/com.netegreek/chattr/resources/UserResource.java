@@ -1,12 +1,11 @@
 package com.netegreek.chattr.resources;
 
-import com.netegreek.chattr.services.UserService;
-
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
+import com.netegreek.chattr.services.UserService;
 
 @Path("/user")
 public class UserResource {

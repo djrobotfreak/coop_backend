@@ -1,8 +1,7 @@
 package com.netegreek.chattr.resources.requests.credential;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by dwene on 3/6/16.

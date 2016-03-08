@@ -1,14 +1,10 @@
 package com.netegreek.chattr.services;
 
+import javax.inject.Inject;
 import com.netegreek.chattr.clients.FacebookClient;
-import com.netegreek.chattr.db.User;
 import com.netegreek.chattr.mappers.FacebookUserMapper;
 import com.netegreek.chattr.repositories.UserRepository;
 import com.netegreek.chattr.responses.FacebookUserResponse;
-
-import javax.inject.Inject;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * Created by dwene on 3/5/16.

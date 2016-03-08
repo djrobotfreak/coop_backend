@@ -1,13 +1,11 @@
 package com.netegreek.chattr.clients;
 
-import com.netegreek.chattr.responses.FacebookTokenResponse;
-import com.netegreek.chattr.responses.FacebookUserResponse;
-import org.glassfish.jersey.client.ClientResponse;
-
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.core.Response;
+import com.netegreek.chattr.responses.FacebookTokenResponse;
+import com.netegreek.chattr.responses.FacebookUserResponse;
 
 /**
  * Created by Derek on 2/29/16.

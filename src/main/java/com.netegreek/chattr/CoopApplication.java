@@ -1,5 +1,9 @@
 package com.netegreek.chattr;
 
+import java.util.EnumSet;
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
@@ -47,5 +51,17 @@ public class CoopApplication extends Application<CoopConfiguration> {
         environment.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         environment.getObjectMapper().registerModule(new Jdk8Module());
-    }
+
+		FilterRegistration.Dynamic filter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+		filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class),
+				true, "/*");
+		filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM,
+				"GET,PUT,POST,DELETE,OPTIONS");
+		filter.setInitParameter(CrossOriginFilter.ALLOWED_ORIGINS_PARAM, "*");
+		filter.setInitParameter(
+				CrossOriginFilter.ACCESS_CONTROL_ALLOW_ORIGIN_HEADER, "*");
+		filter.setInitParameter("allowedHeaders",
+				"Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
+		filter.setInitParameter("allowCredentials", "true");
+	}
 }

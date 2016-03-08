@@ -1,10 +1,10 @@
 package com.netegreek.chattr.responses;
 
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.*;
-
 import java.util.Optional;
+import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FacebookUserResponse {

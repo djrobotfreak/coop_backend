@@ -1,8 +1,7 @@
 package com.netegreek.chattr.services;
 
-import com.netegreek.chattr.repositories.UserRepository;
-
 import javax.inject.Inject;
+import com.netegreek.chattr.repositories.UserRepository;
 
 /**
  * Created by Derek on 3/7/16.

@@ -15,7 +15,7 @@ public class UserRequest {
 	private Optional<String> photoUrl;
 
 	@NotNull
-    @JsonProperty("user_name")
+    @JsonProperty("username")
 	private String username;
 
 	private Optional<String> email;

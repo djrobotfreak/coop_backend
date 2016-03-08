@@ -1,12 +1,11 @@
 package com.netegreek.chattr.repositories;
 
-import com.netegreek.chattr.db.User;
-
-import javax.inject.Inject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import javax.inject.Inject;
+import com.netegreek.chattr.db.User;
 
 /**
  * TODO: This needs to actually hook-up with the database.

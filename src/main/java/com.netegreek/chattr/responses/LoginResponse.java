@@ -14,6 +14,7 @@ public class LoginResponse {
         this.authToken = authToken;
     }
 
+	@JsonProperty("auth_token")
     public String getAuthToken() {
         return authToken;
     }

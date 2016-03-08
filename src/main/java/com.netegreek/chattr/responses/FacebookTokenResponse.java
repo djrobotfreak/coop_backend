@@ -1,7 +1,7 @@
 package com.netegreek.chattr.responses;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.joda.time.DateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Created by dwene on 3/1/16.

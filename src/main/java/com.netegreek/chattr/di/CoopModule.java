@@ -1,13 +1,12 @@
 package com.netegreek.chattr.di;
 
+import javax.inject.Singleton;
+import javax.ws.rs.client.Client;
 import com.netegreek.chattr.CoopConfiguration;
 import dagger.Module;
 import dagger.Provides;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.setup.Environment;
-
-import javax.inject.Singleton;
-import javax.ws.rs.client.Client;
 
 /**
  * Created by dwene on 3/1/16.

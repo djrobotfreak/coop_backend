@@ -1,11 +1,10 @@
 package com.netegreek.chattr.di;
 
+import javax.inject.Singleton;
+import javax.ws.rs.client.Client;
 import com.netegreek.chattr.clients.FacebookClient;
 import com.netegreek.chattr.resources.AuthenticationResource;
 import dagger.Component;
-
-import javax.inject.Singleton;
-import javax.ws.rs.client.Client;
 
 /**
  * Created by dwene on 3/1/16.

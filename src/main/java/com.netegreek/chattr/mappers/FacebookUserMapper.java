@@ -1,9 +1,8 @@
 package com.netegreek.chattr.mappers;
 
+import javax.inject.Inject;
 import com.netegreek.chattr.db.User;
 import com.netegreek.chattr.responses.FacebookUserResponse;
-
-import javax.inject.Inject;
 
 /**
  * Created by dwene on 3/5/16.

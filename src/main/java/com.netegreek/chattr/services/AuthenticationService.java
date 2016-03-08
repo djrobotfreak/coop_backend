@@ -9,9 +9,9 @@ import com.netegreek.chattr.db.UserCredentials;
 import com.netegreek.chattr.repositories.UserRepository;
 import com.netegreek.chattr.resources.requests.UserRequest;
 import com.netegreek.chattr.resources.requests.credential.CredentialRequest;
-import com.netegreek.chattr.resources.requests.credential.PasswordCredentialRequest;
 import com.netegreek.chattr.resources.requests.credential.FacebookCredentialRequest;
 import com.netegreek.chattr.resources.requests.credential.GoogleCredentialRequest;
+import com.netegreek.chattr.resources.requests.credential.PasswordCredentialRequest;
 import com.netegreek.chattr.responses.ErrorResponses;
 
 
@@ -35,6 +35,7 @@ public class AuthenticationService {
 		}
 
 		User user = mapUserFromUserRequest(userRequest);
+		user.setToken("abcdefg");
 		userRepository.save(user);
 		return user;
 	}

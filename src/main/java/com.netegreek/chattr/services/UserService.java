@@ -17,7 +17,7 @@ public class UserService {
     }
 
     public boolean isUsernameAvailable(String username) {
-        return !this.userRepository.getByUsername(username).isPresent();
+        return !this.userRepository.getByUsername(username.toLowerCase()).isPresent();
     }
 
     public boolean isPhoneAvailable(String phone) {

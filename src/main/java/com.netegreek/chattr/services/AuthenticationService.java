@@ -28,7 +28,7 @@ public class AuthenticationService {
 	}
 
 	public User register(UserRequest userRequest) {
-		if (userRepository.getByUsername(userRequest.getUsername()).isPresent()) {
+		if (userRepository.getByUsername(userRequest.getUsername().toLowerCase()).isPresent()) {
 			throw new WebApplicationException(ErrorResponses.USERNAME_ALREADY_TAKEN);
 		} else if (userRepository.getByPhone(userRequest.getPhone()).isPresent()) {
 			throw new WebApplicationException(ErrorResponses.PHONE_ALREADY_TAKEN);
@@ -90,7 +90,7 @@ public class AuthenticationService {
 			user.setPhotoUrl(userRequest.getPhotoUrl().get());
 		}
 
-		user.setUsername(userRequest.getUsername());
+		user.setUsername(userRequest.getUsername().toLowerCase());
 		user.setUserCredentials(registerCredentials(userRequest.getCredentialRequest()));
 
 		return user;

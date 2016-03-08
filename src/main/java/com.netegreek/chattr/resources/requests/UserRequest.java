@@ -11,9 +11,11 @@ public class UserRequest {
 	@NotNull
 	private String name;
 
-	private Optional<String> pictureUrl;
+    @JsonProperty("photo_url")
+	private Optional<String> photoUrl;
 
 	@NotNull
+    @JsonProperty("user_name")
 	private String username;
 
 	private Optional<String> email;
@@ -29,8 +31,8 @@ public class UserRequest {
 		return name;
 	}
 
-	public Optional<String> getPictureUrl() {
-		return pictureUrl;
+	public Optional<String> getPhotoUrl() {
+		return photoUrl;
 	}
 
 	public String getUsername() {

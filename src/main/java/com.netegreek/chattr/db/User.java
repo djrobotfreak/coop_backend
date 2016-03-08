@@ -1,7 +1,5 @@
 package com.netegreek.chattr.db;
 
-import java.util.Collection;
-import java.util.Optional;
 import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

@@ -1,5 +1,7 @@
 package com.netegreek.chattr.resources.requests.credential;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotNull;
 
 /**
@@ -10,6 +12,7 @@ public class PasswordCredentialRequest extends CredentialRequest {
 	@NotNull
 	private String password;
 
+	@JsonProperty("user_name")
 	private String username;
 
 	public String getPassword() {
@@ -19,4 +22,5 @@ public class PasswordCredentialRequest extends CredentialRequest {
 	public String getUsername() {
 		return username;
 	}
+
 }

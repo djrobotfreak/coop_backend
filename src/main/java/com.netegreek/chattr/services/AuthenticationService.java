@@ -86,8 +86,8 @@ public class AuthenticationService {
 
 		user.setName(userRequest.getName());
 
-		if (userRequest.getPictureUrl().isPresent()) {
-			user.setPhotoUrl(userRequest.getPictureUrl().get());
+		if (userRequest.getPhotoUrl().isPresent()) {
+			user.setPhotoUrl(userRequest.getPhotoUrl().get());
 		}
 
 		user.setUsername(userRequest.getUsername());

@@ -35,15 +35,14 @@ public class AuthenticationService {
 		}
 
 		User user = mapUserFromUserRequest(userRequest);
-		user.setToken("abcdefg");
+		user.setToken(BasicCredentials.generateToken());
 		userRepository.save(user);
 		return user;
 	}
 
-
 	public User login(CredentialRequest credentialRequest) {
 		User user = getUserFromCredentials(credentialRequest);
-		user.setToken("abcdefg");
+		user.setToken(BasicCredentials.generateToken());
 		userRepository.save(user);
 		return user;
 	}
@@ -129,7 +128,6 @@ public class AuthenticationService {
 		return user.get();
 	}
 
-
 	private User getUserFromGoogleCredentials(GoogleCredentialRequest credentialRequest) {
 		if (!areGoogleCredentialsValid(credentialRequest)) {
 			throw new WebApplicationException(ErrorResponses.LOGIN_FAILED);
@@ -151,7 +149,6 @@ public class AuthenticationService {
 		}
 		return user.get();
 	}
-
 
 	private UserCredentials registerWithFacebook(FacebookCredentialRequest credentialRequest) {
 

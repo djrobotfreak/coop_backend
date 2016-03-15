@@ -23,9 +23,6 @@ public class UserEntity extends Entity {
 	@Column(name = "username", nullable = false)
 	private String username;
 
-	@Column(name = "token", nullable = false)
-    private String token;
-
 	@Column(name = "photo_url")
     private String photoUrl;
 
@@ -71,14 +68,6 @@ public class UserEntity extends Entity {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
 	}
 
 	public String getPhotoUrl() {

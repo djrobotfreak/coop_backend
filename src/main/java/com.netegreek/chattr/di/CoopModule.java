@@ -2,6 +2,7 @@ package com.netegreek.chattr.di;
 
 import javax.inject.Singleton;
 import javax.ws.rs.client.Client;
+import com.fasterxml.jackson.core.JsonFactory;
 import com.netegreek.chattr.CoopConfiguration;
 import com.netegreek.chattr.application.CoopHibernateBundle;
 import dagger.Module;
@@ -27,6 +28,11 @@ public class CoopModule {
 		this.hibernateBundle = hibernateBundle;
         this.client = new JerseyClientBuilder(environment).using(environment).build("Facebook Client");
     }
+
+	@Provides
+	public JsonFactory getJsonFactory(){
+		return environment.getObjectMapper().getFactory();
+	}
 
 	@Provides
 	public SessionFactory getSessionFactory() {

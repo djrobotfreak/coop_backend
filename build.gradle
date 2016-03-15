@@ -60,8 +60,10 @@ dependencies {
             "com.google.dagger:dagger:$daggerVersion",
             "mysql:mysql-connector-java:$mySqlConnectorVersion",
             "com.twilio.sdk:twilio-java-sdk:$twilioVersion",
+            "com.google.api-client:google-api-client:1.19.1",
             'com.amazonaws:aws-java-sdk-s3',
             "com.lambdaworks:scrypt:1.4.0",
+            "io.jsonwebtoken:jjwt:0.6.0",
     )
     testCompile "org.testng:testng:$testNGVersion"
     testCompile group: 'junit', name: 'junit', version: '4.11'

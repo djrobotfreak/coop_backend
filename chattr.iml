@@ -156,5 +156,11 @@
     <orderEntry type="library" exported="" name="Gradle: org.liquibase:liquibase-core:3.4.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: com.mattbertolini:liquibase-slf4j:1.2.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: mysql:mysql-connector-java:5.1.38" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: io.jsonwebtoken:jjwt:0.6.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.google.api-client:google-api-client:1.19.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.google.oauth-client:google-oauth-client:1.19.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.google.http-client:google-http-client-jackson2:1.19.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.google.guava:guava-jdk5:13.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: com.google.http-client:google-http-client:1.19.0" level="project" />
   </component>
 </module>

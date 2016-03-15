@@ -14,8 +14,6 @@ public class User extends Savable implements Identifiable {
 
 	private String username;
 
-	private String token;
-
 	private Optional<String> photoUrl;
 
 	private String phone;
@@ -56,14 +54,6 @@ public class User extends Savable implements Identifiable {
 		this.username = username;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
-
 	public Optional<String> getPhotoUrl() {
 		return photoUrl;
 	}
@@ -95,7 +85,6 @@ public class User extends Savable implements Identifiable {
 		userEntity.setEmail(email);
 		userEntity.setName(name);
 		userEntity.setUsername(username);
-		userEntity.setToken(token);
 		if(photoUrl.isPresent()){
 			userEntity.setPhotoUrl(photoUrl.get());
 		}
@@ -112,7 +101,6 @@ public class User extends Savable implements Identifiable {
 		this.setEmail(userEntity.getEmail());
 		this.setName(userEntity.getName());
 		this.setUsername(userEntity.getUsername());
-		this.setToken(userEntity.getToken());
 		if (userEntity.getPhotoUrl() != null) {
 			this.setPhotoUrl(userEntity.getPhotoUrl());
 		}

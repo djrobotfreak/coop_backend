@@ -4,6 +4,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
 import com.netegreek.chattr.api.User;
+import com.netegreek.chattr.auth.BadJWTException;
 import com.netegreek.chattr.auth.BasicCredentials;
 import com.netegreek.chattr.api.UserCredentials;
 import com.netegreek.chattr.models.db.UserEntity;
@@ -16,17 +17,20 @@ import com.netegreek.chattr.resources.requests.credential.PasswordCredentialRequ
 import com.netegreek.chattr.responses.ErrorResponses;
 import org.eclipse.jetty.server.Response;
 
-
 public class AuthenticationService {
 
 	private UserRepository userRepository;
 
 	private FacebookService facebookService;
 
+	private GoogleService googleService;
+
 	@Inject
-	public AuthenticationService(UserRepository userRepository, FacebookService facebookService) {
+	public AuthenticationService(UserRepository userRepository, FacebookService facebookService,
+								 GoogleService googleService) {
 		this.userRepository = userRepository;
 		this.facebookService = facebookService;
+		this.googleService = googleService;
 	}
 
 	public User register(UserRequest userRequest) {
@@ -37,7 +41,6 @@ public class AuthenticationService {
 		}
 
 		User user = mapUserFromUserRequest(userRequest);
-		user.setToken(BasicCredentials.generateToken());
 		UserEntity userEntity = new UserEntity();
 		user.updateEntity(userEntity);
 		userRepository.save(userEntity);
@@ -51,8 +54,6 @@ public class AuthenticationService {
 		}
 		User user = new User();
 		user.updateFromEntity(userEntity.get());
-		//TODO: Support multiple logins.
-		user.setToken(BasicCredentials.generateToken());
 		user.updateEntity(userEntity.get());
 		userRepository.save(userEntity.get());
 		return user;
@@ -75,12 +76,8 @@ public class AuthenticationService {
 		if (credentialRequest.getClass() == FacebookCredentialRequest.class) {
 			return registerWithFacebook((FacebookCredentialRequest) credentialRequest);
 		} else if (credentialRequest.getClass() == GoogleCredentialRequest.class) {
-			if (userRepository.getByFacebookId(((GoogleCredentialRequest)credentialRequest).getGoogleId()).isPresent()) {
-				throw new WebApplicationException(ErrorResponses.USER_ALREADY_EXISTS);
-			}
 			return registerWithGoogle((GoogleCredentialRequest) credentialRequest);
 		} else if (credentialRequest.getClass() == PasswordCredentialRequest.class) {
-
 			return registerWithPasswordCredentials((PasswordCredentialRequest) credentialRequest);
 		} else {
 			throw new WebApplicationException("No UserCredentials Found");
@@ -112,10 +109,6 @@ public class AuthenticationService {
 				credentialRequest.getFacebookToken()));
 	}
 
-	private boolean areGoogleCredentialsValid(GoogleCredentialRequest credentialRequest) {
-		return true;
-	}
-
 	private boolean arePasswordCredentialsValid(String checkPassword, String storedPassword) {
 		return BasicCredentials.checkPassword(checkPassword,
 					storedPassword);
@@ -133,11 +126,15 @@ public class AuthenticationService {
 	}
 
 	private Optional<UserEntity> getUserFromGoogleCredentials(GoogleCredentialRequest credentialRequest) {
-		if (!areGoogleCredentialsValid(credentialRequest)) {
+		Long googleId;
+
+		try {
+			googleId = googleService.getIdFromToken(credentialRequest.getGoogleToken());
+		} catch (BadJWTException ex) {
 			throw new WebApplicationException(ErrorResponses.LOGIN_FAILED);
 		}
 
-		Optional<UserEntity> userEntity = userRepository.getByFacebookId(credentialRequest.getGoogleId());
+		Optional<UserEntity> userEntity = userRepository.getByGoogleId(googleId);
 
 		if (!userEntity.isPresent()) {
 			throw new WebApplicationException(ErrorResponses.REGISTRATION_REQUIRED);
@@ -171,7 +168,16 @@ public class AuthenticationService {
 
 	private UserCredentials registerWithGoogle(GoogleCredentialRequest credentialRequest) {
 		UserCredentials userCredentials = new UserCredentials();
-		userCredentials.setGoogleId(Optional.of(credentialRequest.getGoogleId()));
+		Long googleId;
+		try {
+			googleId = googleService.getIdFromToken(credentialRequest.getGoogleToken());
+		} catch(BadJWTException ex) {
+			throw new WebApplicationException(ErrorResponses.LOGIN_FAILED);
+		}
+		userCredentials.setGoogleId(Optional.of(googleId));
+		if (userRepository.getByGoogleId(googleId).isPresent()) {
+			throw new WebApplicationException(ErrorResponses.USER_ALREADY_EXISTS);
+		}
 		return userCredentials;
 	}
 

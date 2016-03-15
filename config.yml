@@ -27,3 +27,14 @@ database:
   checkConnectionWhileIdle: true
   evictionInterval: 10s
   minIdleTime: 1 minute
+
+auth:
+  secret: YWI1MTg1YTctNGJjMi00YzcyLTkyOWQtNDZjNjJiZGRiZDE1
+
+facebook:
+  client_id: 228671707475003
+  secret: b73febb6f94c991a90e78da47b35c379
+
+google:
+  client_id: 460438236970-uecf0olbtirtp55r10a4cuev2ntiuep7.apps.googleusercontent.com
+  secret: VrwbbrmJR968kXX-YeEIVBQ3

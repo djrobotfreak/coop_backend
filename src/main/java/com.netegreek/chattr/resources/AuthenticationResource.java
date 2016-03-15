@@ -8,6 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.codahale.metrics.annotation.Timed;
 import com.netegreek.chattr.api.User;
+import com.netegreek.chattr.auth.JWTUtil;
 import com.netegreek.chattr.resources.requests.UserRequest;
 import com.netegreek.chattr.resources.requests.credential.CredentialRequest;
 import com.netegreek.chattr.responses.LoginResponse;
@@ -19,10 +20,13 @@ import com.netegreek.chattr.models.services.AuthenticationService;
 public class AuthenticationResource {
 
 	private AuthenticationService authenticationService;
+	private JWTUtil jwtUtil;
 
     @Inject
-    public AuthenticationResource(AuthenticationService authenticationService) {
+    public AuthenticationResource(AuthenticationService authenticationService,
+								  JWTUtil jwtUtil) {
         this.authenticationService = authenticationService;
+		this.jwtUtil = jwtUtil;
     }
 
 	@POST
@@ -31,7 +35,7 @@ public class AuthenticationResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public LoginResponse register(UserRequest userRequest) {
 		User user = authenticationService.register(userRequest);
-		return new LoginResponse(user.getToken());
+		return new LoginResponse(jwtUtil.createJWT(user));
 	}
 
 	@POST
@@ -40,6 +44,6 @@ public class AuthenticationResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public LoginResponse login(CredentialRequest credentialRequest) {
 		User user = authenticationService.login(credentialRequest);
-		return new LoginResponse(user.getToken());
+		return new LoginResponse(jwtUtil.createJWT(user));
 	}
 }

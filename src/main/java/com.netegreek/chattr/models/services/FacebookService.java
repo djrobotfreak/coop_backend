@@ -13,14 +13,9 @@ public class FacebookService {
 
     private FacebookClient facebookClient;
 
-    private FacebookUserMapper userMapper;
-
-    private UserRepository userRepository;
-
     @Inject
-    public FacebookService(FacebookClient facebookClient, FacebookUserMapper userMapper) {
+    public FacebookService(FacebookClient facebookClient) {
         this.facebookClient = facebookClient;
-        this.userMapper = userMapper;
     }
 
 	public boolean checkCredentials(Long id, String accessToken) {

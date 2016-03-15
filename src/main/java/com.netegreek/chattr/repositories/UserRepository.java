@@ -1,72 +1,43 @@
 package com.netegreek.chattr.repositories;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import javax.inject.Inject;
-import com.netegreek.chattr.db.User;
+import com.netegreek.chattr.models.db.UserEntity;
+import org.hibernate.SessionFactory;
 
 /**
  * TODO: This needs to actually hook-up with the database.
  */
-public class UserRepository {
+public class UserRepository extends AbstractRepository {
 
-    @Inject
-    public UserRepository() {
-    }
-
-    private Map<UUID, User> userRepository = new HashMap<UUID, User>();
-
-    public Optional<User> getById(UUID uuid) {
-        if (this.userRepository.containsKey(uuid)) {
-            return Optional.of(this.userRepository.get(uuid));
-        } else {
-            return Optional.empty();
-        }
-    }
-
-	public Optional<User> getByUsername(String username) {
-		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
-			if (user.getValue().getUsername().equals(username)) {
-				return Optional.of(user.getValue());
-			}
-		}
-		return Optional.empty();
+	@Inject
+	public UserRepository(SessionFactory sessionFactory){
+		super(sessionFactory);
 	}
 
-	public Optional<User> getByPhone(String phone) {
-		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
-			if (user.getValue().getPhone().equals(phone)) {
-				return Optional.of(user.getValue());
-			}
+    public Optional<UserEntity> getById(Long id) {
+		UserEntity entity = super.getById(UserEntity.class, id);
+		if (entity == null) {
+			return Optional.empty();
 		}
-		return Optional.empty();
-	}
-
-    public Optional<User> getByFacebookId(Long id) {
-		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
-			if (user.getValue().getUserCredentials().getFacebookId().isPresent()) {
-				if (user.getValue().getUserCredentials().getFacebookId().get().equals(id)) {
-					return Optional.of(user.getValue());
-				}
-			}
-		}
-		return Optional.empty();
+		return Optional.of(entity);
     }
 
-	public Optional<User> getByGoogleId(Long id) {
-		for (Map.Entry<UUID, User> user : userRepository.entrySet()) {
-			if (user.getValue().getUserCredentials().getGoogleId().isPresent()) {
-				if (user.getValue().getUserCredentials().getGoogleId().get().equals(id)) {
-					return Optional.of(user.getValue());
-				}
-			}
-		}
-		return Optional.empty();
+	public Optional<UserEntity> getByUsername(String username) {
+
+		return super.getOneByParameter(UserEntity.class, "username", username);
 	}
 
-    public void save(User user) {
-        this.userRepository.put(user.getId(), user);
+	public Optional<UserEntity> getByPhone(String phone) {
+		return super.getOneByParameter(UserEntity.class, "phone", phone);
+	}
+
+    public Optional<UserEntity> getByFacebookId(Long facebookId) {
+		return super.getOneByParameter(UserEntity.class, "facebook_id", facebookId);
     }
+
+	public Optional<UserEntity> getByGoogleId(Long googleId) {
+		return super.getOneByParameter(UserEntity.class, "google_id", googleId);
+
+	}
 }

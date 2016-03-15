@@ -1,8 +1,8 @@
-package com.netegreek.chattr.services;
+package com.netegreek.chattr.models.services;
 
 import javax.inject.Inject;
 import com.netegreek.chattr.clients.FacebookClient;
-import com.netegreek.chattr.mappers.FacebookUserMapper;
+import com.netegreek.chattr.models.mappers.FacebookUserMapper;
 import com.netegreek.chattr.repositories.UserRepository;
 import com.netegreek.chattr.responses.FacebookUserResponse;
 
@@ -18,10 +18,9 @@ public class FacebookService {
     private UserRepository userRepository;
 
     @Inject
-    public FacebookService(FacebookClient facebookClient, FacebookUserMapper userMapper, UserRepository repository) {
+    public FacebookService(FacebookClient facebookClient, FacebookUserMapper userMapper) {
         this.facebookClient = facebookClient;
         this.userMapper = userMapper;
-        this.userRepository = repository;
     }
 
 	public boolean checkCredentials(Long id, String accessToken) {

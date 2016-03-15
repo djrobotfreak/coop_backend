@@ -1,7 +1,7 @@
-package com.netegreek.chattr.mappers;
+package com.netegreek.chattr.models.mappers;
 
 import javax.inject.Inject;
-import com.netegreek.chattr.db.User;
+import com.netegreek.chattr.api.User;
 import com.netegreek.chattr.responses.FacebookUserResponse;
 
 /**

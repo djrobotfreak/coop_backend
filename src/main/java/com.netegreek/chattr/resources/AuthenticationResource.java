@@ -7,11 +7,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import com.codahale.metrics.annotation.Timed;
-import com.netegreek.chattr.db.User;
+import com.netegreek.chattr.api.User;
 import com.netegreek.chattr.resources.requests.UserRequest;
 import com.netegreek.chattr.resources.requests.credential.CredentialRequest;
 import com.netegreek.chattr.responses.LoginResponse;
-import com.netegreek.chattr.services.AuthenticationService;
+import com.netegreek.chattr.models.services.AuthenticationService;
 
 
 @Path("/auth")
@@ -39,7 +39,6 @@ public class AuthenticationResource {
 	@Path("/login")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public LoginResponse login(CredentialRequest credentialRequest) {
-
 		User user = authenticationService.login(credentialRequest);
 		return new LoginResponse(user.getToken());
 	}

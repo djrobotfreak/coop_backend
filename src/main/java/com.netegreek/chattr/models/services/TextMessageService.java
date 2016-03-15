@@ -1,4 +1,4 @@
-package com.netegreek.chattr.services;
+package com.netegreek.chattr.models.services;
 
 /**
  * Created by Derek on 3/5/16.

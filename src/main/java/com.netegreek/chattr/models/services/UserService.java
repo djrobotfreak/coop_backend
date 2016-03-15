@@ -1,4 +1,4 @@
-package com.netegreek.chattr.services;
+package com.netegreek.chattr.models.services;
 
 import javax.inject.Inject;
 import com.netegreek.chattr.repositories.UserRepository;

@@ -1,11 +1,12 @@
-package com.netegreek.chattr.services;
+package com.netegreek.chattr.models.services;
 
 import java.util.Optional;
 import javax.inject.Inject;
 import javax.ws.rs.WebApplicationException;
+import com.netegreek.chattr.api.User;
 import com.netegreek.chattr.auth.BasicCredentials;
-import com.netegreek.chattr.db.User;
-import com.netegreek.chattr.db.UserCredentials;
+import com.netegreek.chattr.api.UserCredentials;
+import com.netegreek.chattr.models.db.UserEntity;
 import com.netegreek.chattr.repositories.UserRepository;
 import com.netegreek.chattr.resources.requests.UserRequest;
 import com.netegreek.chattr.resources.requests.credential.CredentialRequest;
@@ -13,6 +14,7 @@ import com.netegreek.chattr.resources.requests.credential.FacebookCredentialRequ
 import com.netegreek.chattr.resources.requests.credential.GoogleCredentialRequest;
 import com.netegreek.chattr.resources.requests.credential.PasswordCredentialRequest;
 import com.netegreek.chattr.responses.ErrorResponses;
+import org.eclipse.jetty.server.Response;
 
 
 public class AuthenticationService {
@@ -36,18 +38,27 @@ public class AuthenticationService {
 
 		User user = mapUserFromUserRequest(userRequest);
 		user.setToken(BasicCredentials.generateToken());
-		userRepository.save(user);
+		UserEntity userEntity = new UserEntity();
+		user.updateEntity(userEntity);
+		userRepository.save(userEntity);
 		return user;
 	}
 
 	public User login(CredentialRequest credentialRequest) {
-		User user = getUserFromCredentials(credentialRequest);
+		Optional<UserEntity> userEntity = getUserFromCredentials(credentialRequest);
+		if (!userEntity.isPresent()) {
+			throw new WebApplicationException(Response.SC_UNAUTHORIZED);
+		}
+		User user = new User();
+		user.updateFromEntity(userEntity.get());
+		//TODO: Support multiple logins.
 		user.setToken(BasicCredentials.generateToken());
-		userRepository.save(user);
+		user.updateEntity(userEntity.get());
+		userRepository.save(userEntity.get());
 		return user;
 	}
 
-	private User getUserFromCredentials(CredentialRequest credentialRequest) {
+	private Optional<UserEntity> getUserFromCredentials(CredentialRequest credentialRequest) {
 		if (credentialRequest.getClass() == FacebookCredentialRequest.class) {
 			return getUserFromFacebookCredentials((FacebookCredentialRequest) credentialRequest);
 		} else if (credentialRequest.getClass() == GoogleCredentialRequest.class) {
@@ -105,53 +116,47 @@ public class AuthenticationService {
 		return true;
 	}
 
-	private boolean arePasswordCredentialsValid(PasswordCredentialRequest credentialRequest) {
-		Optional<User> user =  userRepository.getByUsername(credentialRequest.getUsername());
-		if (user.isPresent()) {
-			if (user.get().getUserCredentials().getHashedPassword().isPresent()) {
-				return BasicCredentials.checkPassword(credentialRequest.getPassword(),
-						user.get().getUserCredentials().getHashedPassword().get());
-			}
-
-		}
-		return false;
+	private boolean arePasswordCredentialsValid(String checkPassword, String storedPassword) {
+		return BasicCredentials.checkPassword(checkPassword,
+					storedPassword);
 	}
 
-	private User getUserFromFacebookCredentials(FacebookCredentialRequest credentialRequest) {
+	private Optional<UserEntity> getUserFromFacebookCredentials(FacebookCredentialRequest credentialRequest) {
 		if (!areFacebookCredentialsValid(credentialRequest)) {
 			throw new WebApplicationException(ErrorResponses.LOGIN_FAILED);
 		}
-		Optional<User> user = userRepository.getByFacebookId(credentialRequest.getFacebookId());
-		if (!user.isPresent()) {
+		Optional<UserEntity> userEntity = userRepository.getByFacebookId(credentialRequest.getFacebookId());
+		if (!userEntity.isPresent()) {
 			throw new WebApplicationException(ErrorResponses.REGISTRATION_REQUIRED);
 		}
-		return user.get();
+		return userEntity;
 	}
 
-	private User getUserFromGoogleCredentials(GoogleCredentialRequest credentialRequest) {
+	private Optional<UserEntity> getUserFromGoogleCredentials(GoogleCredentialRequest credentialRequest) {
 		if (!areGoogleCredentialsValid(credentialRequest)) {
 			throw new WebApplicationException(ErrorResponses.LOGIN_FAILED);
 		}
-		Optional<User> user = userRepository.getByGoogleId(credentialRequest.getGoogleId());
-		if (!user.isPresent()) {
+
+		Optional<UserEntity> userEntity = userRepository.getByFacebookId(credentialRequest.getGoogleId());
+
+		if (!userEntity.isPresent()) {
 			throw new WebApplicationException(ErrorResponses.REGISTRATION_REQUIRED);
 		}
-		return user.get();
+		return userEntity;
 	}
 
-	private User getUserFromPasswordCredentials(PasswordCredentialRequest credentialRequest) {
-		if (!arePasswordCredentialsValid(credentialRequest)) {
-			throw new WebApplicationException(ErrorResponses.LOGIN_FAILED);
+	private Optional<UserEntity> getUserFromPasswordCredentials(PasswordCredentialRequest credentialRequest) {
+		Optional<UserEntity> userEntity = userRepository.getByUsername(credentialRequest.getUsername());
+		if (!userEntity.isPresent()) {
+			return Optional.empty();
 		}
-		Optional<User> user = userRepository.getByUsername(credentialRequest.getUsername());
-		if (!user.isPresent()) {
-			throw new WebApplicationException(ErrorResponses.LOGIN_FAILED);
+		if (!arePasswordCredentialsValid(userEntity.get().getHashedPassword(), credentialRequest.getPassword())) {
+			return Optional.empty();
 		}
-		return user.get();
+		return userEntity;
 	}
 
 	private UserCredentials registerWithFacebook(FacebookCredentialRequest credentialRequest) {
-
 		if (!areFacebookCredentialsValid(credentialRequest)) {
 			throw new WebApplicationException("Facebook User ID and Token do not match");
 
@@ -171,7 +176,6 @@ public class AuthenticationService {
 	}
 
 	private UserCredentials registerWithPasswordCredentials(PasswordCredentialRequest credentialRequest) {
-
 		UserCredentials userCredentials = new UserCredentials();
 		userCredentials.setHashedPassword(Optional.of(BasicCredentials.hashPassword(credentialRequest.getPassword())));
 		return userCredentials;

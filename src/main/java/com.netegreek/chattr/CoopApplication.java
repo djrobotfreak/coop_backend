@@ -3,6 +3,9 @@ package com.netegreek.chattr;
 import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import com.netegreek.chattr.application.CoopHibernateBundle;
+import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.migrations.MigrationsBundle;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -22,6 +25,7 @@ public class CoopApplication extends Application<CoopConfiguration> {
     public static void main(String[] args) throws Exception {
         new CoopApplication().run(args);
     }
+	private static final CoopHibernateBundle coopHibernateBundle = new CoopHibernateBundle();
 
     @Override
     public void initialize(Bootstrap<CoopConfiguration> bootstrap) {
@@ -32,12 +36,22 @@ public class CoopApplication extends Application<CoopConfiguration> {
                         new EnvironmentVariableSubstitutor(false)
                 )
         );
+
+		bootstrap.addBundle(new MigrationsBundle<CoopConfiguration>() {
+			@Override
+			public DataSourceFactory getDataSourceFactory(CoopConfiguration configuration) {
+				return configuration.getDataSourceFactory();
+			}
+		});
+
+
+		bootstrap.addBundle(coopHibernateBundle);
     }
 
     @Override
     public void run(CoopConfiguration configuration, Environment environment) {
         CoopComponent component = DaggerCoopComponent.builder()
-                .coopModule(new CoopModule(configuration, environment))
+                .coopModule(new CoopModule(configuration, environment, coopHibernateBundle))
                 .build();
 
         environment.jersey().register(component.authenticationResource());

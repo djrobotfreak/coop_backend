@@ -3,14 +3,12 @@ package com.netegreek.chattr.di;
 import javax.inject.Singleton;
 import javax.ws.rs.client.Client;
 import com.netegreek.chattr.CoopConfiguration;
+import com.netegreek.chattr.application.CoopHibernateBundle;
 import dagger.Module;
 import dagger.Provides;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.setup.Environment;
-
-/**
- * Created by dwene on 3/1/16.
- */
+import org.hibernate.SessionFactory;
 
 @Module
 public class CoopModule {
@@ -19,13 +17,21 @@ public class CoopModule {
 
     private Environment environment;
 
+	private CoopHibernateBundle hibernateBundle;
+
     private Client client;
 
-    public CoopModule(CoopConfiguration configuration, Environment environment) {
+    public CoopModule(CoopConfiguration configuration, Environment environment, CoopHibernateBundle hibernateBundle) {
         this.configuration = configuration;
         this.environment = environment;
+		this.hibernateBundle = hibernateBundle;
         this.client = new JerseyClientBuilder(environment).using(environment).build("Facebook Client");
     }
+
+	@Provides
+	public SessionFactory getSessionFactory() {
+		return hibernateBundle.getSessionFactory();
+	}
 
     @Provides
     @Singleton

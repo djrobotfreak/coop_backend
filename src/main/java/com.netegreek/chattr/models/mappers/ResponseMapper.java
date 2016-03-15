@@ -1,4 +1,4 @@
-package com.netegreek.chattr.mappers;
+package com.netegreek.chattr.models.mappers;
 
 /**
  * Created by dwene on 3/5/16.

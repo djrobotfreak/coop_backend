@@ -19,4 +19,6 @@ public class AuthenticationConfiguration {
 	public String getSecret() {
 		return secret;
 	}
+
+
 }

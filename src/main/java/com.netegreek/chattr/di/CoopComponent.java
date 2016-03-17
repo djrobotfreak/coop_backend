@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 import javax.ws.rs.client.Client;
 import com.netegreek.chattr.clients.FacebookClient;
 import com.netegreek.chattr.resources.AuthenticationResource;
+import com.netegreek.chattr.resources.UserResource;
 import dagger.Component;
 
 /**
@@ -19,4 +20,6 @@ public interface CoopComponent {
     FacebookClient facebookTokenService();
 
     AuthenticationResource authenticationResource();
+
+	UserResource userResource();
 }

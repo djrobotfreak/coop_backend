@@ -3,8 +3,10 @@ package com.netegreek.chattr;
 import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netegreek.chattr.application.CoopHibernateBundle;
 import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.jetty.setup.ServletEnvironment;
 import io.dropwizard.migrations.MigrationsBundle;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,7 +27,7 @@ public class CoopApplication extends Application<CoopConfiguration> {
     public static void main(String[] args) throws Exception {
         new CoopApplication().run(args);
     }
-	private static final CoopHibernateBundle coopHibernateBundle = new CoopHibernateBundle();
+	private static final CoopHibernateBundle COOP_HIBERNATE_BUNDLE = new CoopHibernateBundle();
 
     @Override
     public void initialize(Bootstrap<CoopConfiguration> bootstrap) {
@@ -44,29 +46,36 @@ public class CoopApplication extends Application<CoopConfiguration> {
 			}
 		});
 
-
-		bootstrap.addBundle(coopHibernateBundle);
+		bootstrap.addBundle(COOP_HIBERNATE_BUNDLE);
     }
 
     @Override
     public void run(CoopConfiguration configuration, Environment environment) {
         CoopComponent component = DaggerCoopComponent.builder()
-                .coopModule(new CoopModule(configuration, environment, coopHibernateBundle))
+                .coopModule(new CoopModule(configuration, environment, COOP_HIBERNATE_BUNDLE))
                 .build();
-
-        environment.jersey().register(component.authenticationResource());
-        environment.jersey().register(new TextMessageResource());
+		registerResources(environment, component);
 
         environment.healthChecks().register("ping", new MarcoHealthCheck());
 
-        environment.getObjectMapper()
-                .setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+        configureJackson(environment.getObjectMapper());
+		configureServlets(environment.servlets());
+	}
 
-        environment.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+	private void registerResources(Environment environment, CoopComponent component) {
+		environment.jersey().register(component.authenticationResource());
+		environment.jersey().register(new TextMessageResource());
+		environment.jersey().register(component.userResource());
+	}
 
-        environment.getObjectMapper().registerModule(new Jdk8Module());
+	private void configureJackson(ObjectMapper mapper) {
+		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+		mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+		mapper.registerModule(new Jdk8Module());
+	}
 
-		FilterRegistration.Dynamic filter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+	private void configureServlets(ServletEnvironment servlets) {
+		FilterRegistration.Dynamic filter = servlets.addFilter("CORS", CrossOriginFilter.class);
 		filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class),
 				true, "/*");
 		filter.setInitParameter(CrossOriginFilter.ALLOWED_METHODS_PARAM,
@@ -78,4 +87,6 @@ public class CoopApplication extends Application<CoopConfiguration> {
 				"Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
 		filter.setInitParameter("allowCredentials", "true");
 	}
+
+
 }

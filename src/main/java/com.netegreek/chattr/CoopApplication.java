@@ -4,7 +4,9 @@ import java.util.EnumSet;
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netegreek.chattr.api.BasicUser;
 import com.netegreek.chattr.application.CoopHibernateBundle;
+import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jetty.setup.ServletEnvironment;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -12,6 +14,9 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.netegreek.chattr.auth.UserAuthFilter;
+import com.netegreek.chattr.auth.UserAuthenticator;
+import com.netegreek.chattr.auth.UserAuthorizer;
 import com.netegreek.chattr.di.CoopComponent;
 import com.netegreek.chattr.di.CoopModule;
 import com.netegreek.chattr.di.DaggerCoopComponent;
@@ -54,6 +59,13 @@ public class CoopApplication extends Application<CoopConfiguration> {
         CoopComponent component = DaggerCoopComponent.builder()
                 .coopModule(new CoopModule(configuration, environment, COOP_HIBERNATE_BUNDLE))
                 .build();
+		environment.jersey().register( new AuthDynamicFeature(new UserAuthFilter.Builder<BasicUser>(component.jwtUtil())
+				.setAuthenticator(new UserAuthenticator())
+				.setAuthorizer(new UserAuthorizer())
+				.buildAuthFilter())
+		);
+
+
 		registerResources(environment, component);
 
         environment.healthChecks().register("ping", new MarcoHealthCheck());

@@ -5,6 +5,7 @@ import javax.ws.rs.client.Client;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.netegreek.chattr.CoopConfiguration;
 import com.netegreek.chattr.application.CoopHibernateBundle;
+import com.netegreek.chattr.auth.JWTUtil;
 import dagger.Module;
 import dagger.Provides;
 import io.dropwizard.client.JerseyClientBuilder;

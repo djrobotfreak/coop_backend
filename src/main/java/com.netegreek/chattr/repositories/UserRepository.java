@@ -24,7 +24,6 @@ public class UserRepository extends AbstractRepository {
     }
 
 	public Optional<UserEntity> getByUsername(String username) {
-
 		return super.getOneByParameter(UserEntity.class, "username", username);
 	}
 

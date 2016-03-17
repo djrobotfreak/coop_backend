@@ -8,6 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import com.codahale.metrics.annotation.Timed;
+import com.netegreek.chattr.api.BasicUser;
 import com.netegreek.chattr.api.User;
 import com.netegreek.chattr.auth.JWTUtil;
 import com.netegreek.chattr.resources.requests.UserRequest;
@@ -41,19 +42,9 @@ public class AuthenticationResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public LoginResponse register(UserRequest userRequest) {
 		User user = authenticationService.register(userRequest);
-		if (jwtUtil == null) {
-			LOGGER.error("stupid jwtUtil is null for some dumb reason");
-			throw new WebApplicationException("stupid jwtUtil is null for some dumb reason");
-		} else if (user == null) {
-			LOGGER.error("stupid user is null for some dumb reason");
-			throw new WebApplicationException("stupid user is null for some dumb reason");
-		}
-		String jwtResponse = jwtUtil.createJWT(user);
-		if (jwtResponse == null) {
-			LOGGER.error("stupid jwtResponse is null for some dumb reason");
-			throw new WebApplicationException("stupid jwtResponse is null for some dumb reason");
-		}
-		return new LoginResponse(jwtResponse);
+		BasicUser basicUser = new BasicUser();
+		basicUser.updateFromUser(user);
+		return new LoginResponse(jwtUtil.createJWT(basicUser));
 	}
 
 	@POST
@@ -63,6 +54,8 @@ public class AuthenticationResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public LoginResponse login(CredentialRequest credentialRequest) {
 		User user = authenticationService.login(credentialRequest);
-		return new LoginResponse(jwtUtil.createJWT(user));
+		BasicUser basicUser = new BasicUser();
+		basicUser.updateFromUser(user);
+		return new LoginResponse(jwtUtil.createJWT(basicUser));
 	}
 }

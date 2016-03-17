@@ -40,7 +40,6 @@ public class JWTUtil {
 				.setId(user.getId().toString())
 				.setExpiration(expires)
 				.setIssuedAt(now)
-				.setPayload("howdy")
 				.signWith(SIGNATURE_ALGORITHM, signingKey)
 				.compact();
 	}

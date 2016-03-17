@@ -16,8 +16,9 @@ public abstract class AbstractRepository {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public <T extends Entity> void create(T instance) {
+	public <T extends Entity> T create(T instance) {
 		sessionFactory.getCurrentSession().save(instance);
+		return instance;
 	}
 
 	public <T extends Entity> void save(T instance) {

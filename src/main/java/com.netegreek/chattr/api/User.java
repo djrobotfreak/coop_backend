@@ -1,6 +1,7 @@
 package com.netegreek.chattr.api;
 
 import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.netegreek.chattr.models.db.Entity;
 import com.netegreek.chattr.models.db.UserEntity;
 
@@ -14,10 +15,11 @@ public class User extends Savable implements Identifiable {
 
 	private String username;
 
-	private Optional<String> photoUrl;
+	private Optional<String> photoUrl = Optional.empty();
 
 	private String phone;
 
+	@JsonIgnore
 	private UserCredentials userCredentials;
 
 	@Override

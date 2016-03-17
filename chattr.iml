@@ -16,6 +16,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/dependency-cache" />
       <excludeFolder url="file://$MODULE_DIR$/build/distributions" />
       <excludeFolder url="file://$MODULE_DIR$/build/libs" />
+      <excludeFolder url="file://$MODULE_DIR$/build/ran-migrations" />
       <excludeFolder url="file://$MODULE_DIR$/build/resources" />
       <excludeFolder url="file://$MODULE_DIR$/build/scripts" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />

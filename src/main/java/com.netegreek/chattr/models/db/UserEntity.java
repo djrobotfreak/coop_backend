@@ -6,8 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@javax.persistence.Entity( name = "User")
-@Table( name = "users")
+@javax.persistence.Entity( name = "UserEntity")
+@Table( name = "user")
 public class UserEntity extends Entity {
 
 	@Id
@@ -33,7 +33,7 @@ public class UserEntity extends Entity {
 	private String hashedPassword;
 
 	@Column(name = "google_id")
-	private Long googleId;
+	private String googleId;
 
 	@Column(name = "facebook_id")
 	private Long facebookId;
@@ -94,11 +94,11 @@ public class UserEntity extends Entity {
 		this.hashedPassword = hashedPassword;
 	}
 
-	public Long getGoogleId() {
+	public String getGoogleId() {
 		return googleId;
 	}
 
-	public void setGoogleId(Long googleId) {
+	public void setGoogleId(String googleId) {
 		this.googleId = googleId;
 	}
 

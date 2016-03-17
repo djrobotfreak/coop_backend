@@ -10,6 +10,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.netegreek.chattr.auth.BadJWTException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by dwene on 3/15/16.
@@ -17,6 +19,7 @@ import com.netegreek.chattr.auth.BadJWTException;
 public class GoogleService {
 
 	private static final String CLIENT_ID = "460438236970-uecf0olbtirtp55r10a4cuev2ntiuep7.apps.googleusercontent.com";
+	private static final Logger LOGGER = LoggerFactory.getLogger(GoogleService.class);
 
 	private NetHttpTransport httpTransport = new NetHttpTransport();
 	private JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
@@ -25,21 +28,20 @@ public class GoogleService {
 	public GoogleService() {
 	}
 
-	public boolean checkCredentials(Long id, String token) {
+	public boolean checkCredentials(String id, String token) {
 		try {
-			Long tokenId = getIdFromToken(token);
+			String tokenId = getIdFromToken(token);
 			return tokenId.equals(id);
 		} catch (BadJWTException ex ) {
 			return false;
 		}
 	}
 
-	public Long getIdFromToken(String token) throws BadJWTException {
+	public String getIdFromToken(String token) throws BadJWTException {
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(
 				httpTransport,
 				jsonFactory)
 				.setAudience(Arrays.asList(CLIENT_ID))
-				.setIssuer("https://accounts.google.com")
 				.build();
 
 		GoogleIdToken idToken;
@@ -47,6 +49,7 @@ public class GoogleService {
 		try {
 			idToken = verifier.verify(token);
 		} catch (GeneralSecurityException|IOException ex ){
+			LOGGER.error(ex.getMessage());
 			throw new BadJWTException();
 		}
 
@@ -55,8 +58,9 @@ public class GoogleService {
 			GoogleIdToken.Payload payload = idToken.getPayload();
 			String userId = payload.getSubject();
 
-			return Long.parseLong(userId);
+			return userId;
 		} else {
+			LOGGER.error("The idToken was null");
 			throw new BadJWTException();
 		}
 	}

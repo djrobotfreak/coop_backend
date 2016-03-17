@@ -1,11 +1,10 @@
 package com.netegreek.chattr.resources.requests.credential;
 
 import javax.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created by dwene on 3/6/16.
- */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FacebookCredentialRequest extends CredentialRequest {
 
 	@NotNull

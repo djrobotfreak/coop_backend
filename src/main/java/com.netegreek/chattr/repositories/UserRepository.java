@@ -33,11 +33,10 @@ public class UserRepository extends AbstractRepository {
 	}
 
     public Optional<UserEntity> getByFacebookId(Long facebookId) {
-		return super.getOneByParameter(UserEntity.class, "facebook_id", facebookId);
+		return super.getOneByParameter(UserEntity.class, "facebookId", facebookId);
     }
 
-	public Optional<UserEntity> getByGoogleId(Long googleId) {
-		return super.getOneByParameter(UserEntity.class, "google_id", googleId);
-
+	public Optional<UserEntity> getByGoogleId(String googleId) {
+		return super.getOneByParameter(UserEntity.class, "googleId", googleId);
 	}
 }

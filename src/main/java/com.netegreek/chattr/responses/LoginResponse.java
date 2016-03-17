@@ -2,9 +2,6 @@ package com.netegreek.chattr.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/**
- * Created by Derek on 3/7/16.
- */
 public class LoginResponse {
 
     @JsonProperty("auth_token")

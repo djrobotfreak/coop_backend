@@ -5,15 +5,13 @@ import javax.persistence.Table;
 import java.util.Optional;
 import com.netegreek.chattr.models.db.UserEntity;
 
-@Entity(name = "UserCredentials")
-@Table(name = "usercredentials")
 public class UserCredentials {
 
-	private Optional<String> hashedPassword;
+	private Optional<String> hashedPassword = Optional.empty();
 
-	private Optional<Long> googleId;
+	private Optional<String> googleId = Optional.empty();
 
-	private Optional<Long> facebookId;
+	private Optional<Long> facebookId = Optional.empty();
 
 	public Optional<String> getHashedPassword() {
 		return hashedPassword;
@@ -23,11 +21,11 @@ public class UserCredentials {
 		this.hashedPassword = hashedPassword;
 	}
 
-	public Optional<Long> getGoogleId() {
+	public Optional<String> getGoogleId() {
 		return googleId;
 	}
 
-	public void setGoogleId(Optional<Long> googleId) {
+	public void setGoogleId(Optional<String> googleId) {
 		this.googleId = googleId;
 	}
 

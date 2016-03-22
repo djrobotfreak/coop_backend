@@ -21,8 +21,6 @@ test:
 
   post:
     - ./gradlew shadowJar
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    - docker build -t djrobotfreak/coop:$CIRCLE_SHA1 .
 
 deployment:
   cache_directories:

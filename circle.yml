@@ -33,4 +33,4 @@ deployment:
     branch: master
     commands:
       - script/auth-gcloud.sh
-      - gcloud docker push $EXTERNALREGISTRYENDPOINT:$CIRCLE_SHA1 > /dev/null
+      - gcloud docker push $EXTERNALREGISTRYENDPOINT/coop:$CIRCLE_SHA1 > /dev/null

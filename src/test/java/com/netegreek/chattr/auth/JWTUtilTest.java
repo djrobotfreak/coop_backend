@@ -10,15 +10,13 @@ import com.netegreek.chattr.CoopConfiguration;
 import com.netegreek.chattr.api.BasicUser;
 import com.netegreek.chattr.application.config.AuthenticationConfiguration;
 
-/**
- * Created by dwene on 3/17/16.
- */
+
 public class JWTUtilTest {
 
 	private JWTUtil jwtUtil;
 
 	@Before
-	public void setup(){
+	public void setup() {
 		CoopConfiguration coopConfiguration = new CoopConfiguration();
 		String secret = "YWI1MTg1YTctNGJjMi00YzcyLTkyOWQtNDZjNjJiZGRiZDE1";
 		AuthenticationConfiguration authenticationConfiguration = new AuthenticationConfiguration(secret);

@@ -1,0 +1,22 @@
+machine:
+  hosts:
+    dev.coop.com: 127.0.0.1
+  environment:
+    VERSION: $CIRCLE_SHA1
+  java:
+    version: oraclejdk8
+  ruby:
+    version: 2.2.2
+  services:
+    - docker
+
+  post:
+    - ./gradlew shadowJar
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - docker build -t djrobotfreak/coop:$CIRCLE_SHA1 .
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker push djrobotfreak/coop:$CIRCLE_SHA1

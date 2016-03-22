@@ -12,27 +12,25 @@ machine:
     - docker
 
 dependencies:
+  cache_directories:
+    - ~/google-cloud-sdk
+    - ~/docker
+
   override:
     - ./gradlew dependencies
+    - ./gradlew shadowJar
+    - script/ensure-gcloud-installed.sh
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+    - docker build -t $EXTERNALREGISTRYENDPOINT/coop:$CIRCLE_SHA1 .
+    - mkdir -p ~/docker; docker save $EXTERNALREGISTRYENDPOINT:$CIRCLE_SHA1 > ~/docker/image.tar
 
 test:
   override:
     - ./gradlew test
 
-  post:
-    - ./gradlew shadowJar
-
 deployment:
-  override:
-    - mkdir ~/google-cloud-sdk
-    - mkdir ~/docker
-
   prod:
     branch: master
     commands:
-      - script/ensure-gcloud-installed.sh
-      - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
-      - docker build -t $EXTERNALREGISTRYENDPOINT:$CIRCLE_SHA1 .
-      - mkdir -p ~/docker; docker save $EXTERNALREGISTRYENDPOINT:$CIRCLE_SHA1 > ~/docker/image.tar
       - script/auth-gcloud.sh
       - gcloud docker push $EXTERNALREGISTRYENDPOINT:$CIRCLE_SHA1 > /dev/null

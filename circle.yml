@@ -25,9 +25,9 @@ test:
     - docker build -t djrobotfreak/coop:$CIRCLE_SHA1 .
 
 deployment:
-  cache_directories:
-    - ~/google-cloud-sdk
-    - ~/docker
+  override:
+    - mkdir ~/google-cloud-sdk
+    - mkdir ~/docker
 
   prod:
     branch: master

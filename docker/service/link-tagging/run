@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/usr/bin/java -cp /var/www/app/coop-all.jar com.netegreek.chattr.CoopApplication server /var/www/app/config.yml

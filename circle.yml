@@ -3,12 +3,21 @@ machine:
     dev.coop.com: 127.0.0.1
   environment:
     VERSION: $CIRCLE_SHA1
+
   java:
     version: oraclejdk8
-  ruby:
-    version: 2.2.2
+  python:
+    version: 2.7.3
   services:
     - docker
+
+dependencies:
+  override:
+    - ./gradlew dependencies
+
+test:
+  override:
+    - ./gradlew test
 
   post:
     - ./gradlew shadowJar
@@ -16,7 +25,16 @@ machine:
     - docker build -t djrobotfreak/coop:$CIRCLE_SHA1 .
 
 deployment:
-  hub:
+  override:
+    - mkdir ~/google-cloud-sdk
+    - mkdir ~/docker
+
+  prod:
     branch: master
     commands:
-      - docker push djrobotfreak/coop:$CIRCLE_SHA1
+      - script/ensure-gcloud-installed.sh
+      - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+      - docker build -t $EXTERNALREGISTRYENDPOINT:$CIRCLE_SHA1 .
+      - mkdir -p ~/docker; docker save $EXTERNALREGISTRYENDPOINT:$CIRCLE_SHA1 > ~/docker/image.tar
+      - script/auth-gcloud.sh
+      - gcloud docker push $EXTERNALREGISTRYENDPOINT:$CIRCLE_SHA1 > /dev/null

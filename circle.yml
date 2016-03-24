@@ -31,4 +31,4 @@ deployment:
     branch: master
     commands:
       - script/auth-gcloud.sh
-      - gcloud preview app deploy app.yaml
+      - gcloud -q preview app deploy app.yaml --promote

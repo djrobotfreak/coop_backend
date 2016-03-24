@@ -1,8 +1,12 @@
 server:
-  applicationContextPath: /api
+  applicationContextPath: /_ah/
   applicationConnectors:
-    - type: http
+    - type: https
       port: 8080
+      keyStorePath: coop.keystore
+      keyStorePassword: idandc13
+      validateCerts: false
+      supportedProtocols: [TLSv1.2, SSLv2Hello]
 
   adminConnectors:
     - type: http
@@ -13,9 +17,9 @@ logging:
 
 database:
   driverClass: com.mysql.jdbc.Driver
-  user: newuser
-  password: password
-  url: jdbc:mysql://localhost:3306/coop
+  user: coop_application
+  password: YzExNTU2YWYtNGM0Ni00ZGViLWEwODMtMmRhMTYwMmJmYzBkCg
+  url: jdbc:mysql://173.194.239.39:3306/coop
   properties:
     characterEncoding: UTF-8
     connectionTimeout: 5000

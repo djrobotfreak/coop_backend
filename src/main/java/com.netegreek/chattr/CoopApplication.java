@@ -6,6 +6,7 @@ import javax.servlet.FilterRegistration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netegreek.chattr.api.BasicUser;
 import com.netegreek.chattr.application.CoopHibernateBundle;
+import com.netegreek.chattr.resources.HealthCheckResource;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.jetty.setup.ServletEnvironment;
@@ -78,6 +79,7 @@ public class CoopApplication extends Application<CoopConfiguration> {
 		environment.jersey().register(component.authenticationResource());
 		environment.jersey().register(new TextMessageResource());
 		environment.jersey().register(component.userResource());
+		environment.jersey().register(new HealthCheckResource());
 	}
 
 	private void configureJackson(ObjectMapper mapper) {

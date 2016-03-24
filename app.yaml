@@ -8,11 +8,5 @@ automatic_scaling:
   cpu_utilization:
     target_utilization: 0.5
 
-handlers:
-- url: /.*
-  script: IGNORED
-  secure: always
-
-
 health_check:
   enable_health_check: False

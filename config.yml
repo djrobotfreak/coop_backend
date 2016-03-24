@@ -1,12 +1,10 @@
 server:
-  applicationContextPath: /_ah/
   applicationConnectors:
     - type: https
       port: 8080
       keyStorePath: coop.keystore
       keyStorePassword: idandc13
       validateCerts: false
-      supportedProtocols: [TLSv1.2, SSLv2Hello]
 
   adminConnectors:
     - type: http

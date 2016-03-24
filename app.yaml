@@ -12,3 +12,7 @@ handlers:
 - url: /.*
   script: IGNORED
   secure: always
+
+
+health_check:
+  enable_health_check: False

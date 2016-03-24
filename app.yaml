@@ -10,3 +10,5 @@ automatic_scaling:
 
 health_check:
   enable_health_check: False
+
+handlers:

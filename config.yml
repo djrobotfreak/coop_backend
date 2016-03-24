@@ -1,12 +1,10 @@
 server:
   applicationConnectors:
-    - type: http
+    - type: https
       port: 8080
-#    - type: https
-#      port: 8080
-#      keyStorePath: coop.keystore
-#      keyStorePassword: idandc13
-#      validateCerts: false
+      keyStorePath: coop.keystore
+      keyStorePassword: idandc13
+      validateCerts: false
 
   adminConnectors:
     - type: http

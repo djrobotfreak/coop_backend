@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 import com.netegreek.chattr.models.services.UserService;
 import io.dropwizard.hibernate.UnitOfWork;
 
-@Path("/user")
+@Path("/api/user")
 public class UserResource {
 
     private UserService userService;

@@ -5,7 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 
-@Path("health")
+@Path("/_ah/health")
 public class HealthCheckResource {
 
 	@GET

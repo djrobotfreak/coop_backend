@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-@Path("/auth")
+@Path("/api/auth")
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthenticationResource {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationResource.class);

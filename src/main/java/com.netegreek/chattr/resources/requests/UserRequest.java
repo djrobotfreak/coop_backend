@@ -12,13 +12,13 @@ public class UserRequest {
 	private String name;
 
     @JsonProperty("photo_url")
-	private Optional<String> photoUrl;
+	private Optional<String> photoUrl = Optional.empty();
 
 	@NotNull
     @JsonProperty("username")
 	private String username;
 
-	private Optional<String> email;
+	private Optional<String> email = Optional.empty();
 
 	@NotNull
 	private String phone;

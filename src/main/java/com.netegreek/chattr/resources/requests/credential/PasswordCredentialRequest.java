@@ -1,16 +1,15 @@
 package com.netegreek.chattr.resources.requests.credential;
 
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PasswordCredentialRequest extends CredentialRequest {
 
-	@NotNull
+	@NotBlank
 	private String password;
 
-	@JsonProperty("user_name")
+	@NotBlank
 	private String username;
 
 	public String getPassword() {

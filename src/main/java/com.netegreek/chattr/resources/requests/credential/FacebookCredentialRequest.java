@@ -1,18 +1,17 @@
 package com.netegreek.chattr.resources.requests.credential;
 
-import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FacebookCredentialRequest extends CredentialRequest {
 
-	@NotBlank
+	@NotEmpty
 	@JsonProperty("id")
 	private Long facebookId;
 
-	@NotBlank
+	@NotEmpty
 	@JsonProperty("token")
 	private String facebookToken;
 

@@ -1,30 +1,36 @@
 package com.netegreek.chattr.resources.requests;
 
 import java.util.Optional;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netegreek.chattr.resources.requests.credential.CredentialRequest;
 
 
 public class UserRequest {
 
-	@NotBlank
+	@NotEmpty
+	@Length(max = 32)
 	private String name;
 
     @JsonProperty("photo_url")
 	private Optional<String> photoUrl = Optional.empty();
 
-	@NotBlank
+	@NotEmpty
+	@Length(max = 16)
     @JsonProperty("username")
 	private String username;
 
+
 	private Optional<String> email = Optional.empty();
 
-	@NotBlank
+	@NotEmpty
 	private String phone;
 
 	@NotNull
+	@Valid
 	@JsonProperty("credentials")
 	private CredentialRequest credentialRequest;
 

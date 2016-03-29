@@ -1,6 +1,7 @@
 package com.netegreek.chattr.resources;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -40,7 +41,7 @@ public class AuthenticationResource {
 	@Path("/register")
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_JSON)
-	public LoginResponse register(UserRequest userRequest) {
+	public LoginResponse register(@Valid UserRequest userRequest) {
 		User user = authenticationService.register(userRequest);
 		BasicUser basicUser = new BasicUser();
 		basicUser.updateFromUser(user);
@@ -52,7 +53,7 @@ public class AuthenticationResource {
 	@Path("/login")
 	@UnitOfWork
 	@Consumes(MediaType.APPLICATION_JSON)
-	public LoginResponse login(CredentialRequest credentialRequest) {
+	public LoginResponse login(@Valid CredentialRequest credentialRequest) {
 		User user = authenticationService.login(credentialRequest);
 		BasicUser basicUser = new BasicUser();
 		basicUser.updateFromUser(user);

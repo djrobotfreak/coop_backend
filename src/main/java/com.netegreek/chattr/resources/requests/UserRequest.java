@@ -2,25 +2,26 @@ package com.netegreek.chattr.resources.requests;
 
 import java.util.Optional;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.netegreek.chattr.resources.requests.credential.CredentialRequest;
 
 
 public class UserRequest {
 
-	@NotNull
+	@NotBlank
 	private String name;
 
     @JsonProperty("photo_url")
 	private Optional<String> photoUrl = Optional.empty();
 
-	@NotNull
+	@NotBlank
     @JsonProperty("username")
 	private String username;
 
 	private Optional<String> email = Optional.empty();
 
-	@NotNull
+	@NotBlank
 	private String phone;
 
 	@NotNull

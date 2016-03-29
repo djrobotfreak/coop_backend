@@ -9,6 +9,11 @@ server:
 
 logging:
   level: INFO
+  appenders:
+    - type: console
+      threshold: INFO
+      timeZone: UTC
+      target: stdout
 
 database:
   driverClass: com.mysql.jdbc.Driver

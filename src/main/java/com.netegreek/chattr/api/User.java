@@ -99,7 +99,6 @@ public class User extends Savable implements Identifiable {
 
 		super.updateFromEntity(entity);
 		UserEntity userEntity = (UserEntity) entity;
-		this.setId(entity.getId());
 		this.setEmail(userEntity.getEmail());
 		this.setName(userEntity.getName());
 		this.setUsername(userEntity.getUsername());

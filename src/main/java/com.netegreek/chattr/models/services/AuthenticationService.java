@@ -59,8 +59,6 @@ public class AuthenticationService {
 		}
 		User user = new User();
 		user.updateFromEntity(userEntity.get());
-		user.updateEntity(userEntity.get());
-		userRepository.save(userEntity.get());
 		return user;
 	}
 
@@ -153,7 +151,7 @@ public class AuthenticationService {
 		if (!userEntity.isPresent()) {
 			return Optional.empty();
 		}
-		if (!arePasswordCredentialsValid(userEntity.get().getHashedPassword(), credentialRequest.getPassword())) {
+		if (!arePasswordCredentialsValid(credentialRequest.getPassword(), userEntity.get().getHashedPassword())) {
 			return Optional.empty();
 		}
 		return userEntity;

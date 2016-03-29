@@ -32,4 +32,10 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="changeHashedPasswordLength" author="dwene">
+        <modifyDataType
+                columnName="hashed_password"
+                newDataType="varchar(80)"
+                tableName="user"/>
+    </changeSet>
 </databaseChangeLog>
